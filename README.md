@@ -15,32 +15,32 @@ Sistem ini juga dilengkapi dengan fitur rekomendasi latihan (exercise), manajeme
 
 
 
-Deskripsi Website
+## 📌Deskripsi Website
 
 Website ini merupakan sistem rekomendasi program latihan kebugaran berbasis web yang dikembangkan menggunakan framework Flask. Sistem ini dirancang untuk membantu pengguna dalam menentukan program latihan yang sesuai dengan kondisi, kebutuhan, dan preferensi masing-masing pengguna.
 
 Sistem memanfaatkan metode Content-Based Filtering dengan pendekatan TF-IDF dan Cosine Similarity untuk menganalisis kesesuaian antara profil pengguna dan karakteristik program latihan. Dengan pendekatan ini, rekomendasi yang dihasilkan bersifat personal dan relevan.
 
-Manfaat Sistem
+## 📌Manfaat Sistem
 
 Pengembangan website ini memberikan beberapa manfaat utama, antara lain:
 
-Membantu Pengguna Menentukan Program Latihan yang Tepat
+1. Membantu Pengguna Menentukan Program Latihan yang Tepat
 Pengguna tidak perlu memilih program secara manual. Sistem secara otomatis merekomendasikan program latihan yang sesuai dengan tujuan, tingkat pengalaman, dan kondisi pengguna.
 
-Meningkatkan Efektivitas dan Keamanan Latihan
+2. Meningkatkan Efektivitas dan Keamanan Latihan
 Dengan adanya filter tingkat pengalaman dan tempat latihan, pengguna terhindar dari program yang terlalu berat atau tidak sesuai dengan kondisi fisik.
 
-Personalisasi Rekomendasi Latihan
+3. Personalisasi Rekomendasi Latihan
 Sistem memberikan rekomendasi yang berbeda untuk setiap pengguna berdasarkan preferensi individu, sehingga pengalaman penggunaan menjadi lebih personal.
 
-Membantu Perencanaan Aktivitas Kebugaran
+4. Membantu Perencanaan Aktivitas Kebugaran
 Fitur penjadwalan dan favorit memungkinkan pengguna mengatur rencana latihan secara terstruktur dan konsisten.
 
-Mendukung Pengambilan Keputusan Berbasis Data
+5. Mendukung Pengambilan Keputusan Berbasis Data
 Sistem menggunakan data historis pengguna dan data program latihan sebagai dasar rekomendasi, sehingga keputusan yang diambil lebih objektif dan terukur.
 
-Media Edukasi Kebugaran
+6. Media Edukasi Kebugaran
 Fitur rekomendasi latihan individual (exercise) membantu pengguna memahami jenis latihan, otot yang dilatih, serta alat yang digunakan.
 
 ![1](https://github.com/user-attachments/assets/11e7a679-7ec4-4f2a-b22a-e6509aebdf94)
