@@ -1,0 +1,481 @@
+/* static/dashboard.css */
+/* Batman Theme */
+
+body {
+    background: #121212; /* Warna dasar Batman - sangat gelap */
+    color: #E0E0E0;     /* Warna teks utama - abu-abu terang */
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0; /* Hapus margin default body */
+}
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+.sidebar {
+    width: 230px;
+    background: #1A1A1A; /* Abu-abu gelap untuk sidebar */
+    border-radius: 0; /* Hapus border-radius jika ingin lebih tegas */
+    padding: 20px 0; /* Sedikit kurangi padding atas bawah */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: fixed; /* Membuat sidebar kiri fixed */
+    left: 0;
+    top: 0;
+    height: 100vh; /* Tinggi penuh */
+    box-shadow: 3px 0 6px rgba(0,0,0,0.55); /* Bayangan sedikit lebih tegas */
+    border-right: 1px solid #000; /* Tambahkan border kanan yang sangat gelap untuk pemisah */
+    z-index: 1000; /* Naikkan z-index agar di atas backdrop */
+    transition: left 0.3s ease-in-out; /* Transisi untuk slide in/out */
+}
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 15px;
+}
+.sidebar .logo img {
+    max-height: 35px; /* Sedikit perkecil logo */
+    margin-bottom: 10px;
+}
+.sidebar .logo .logo-text { /* Tambahkan class untuk teks logo */
+    font-weight: 700;
+    font-size: 1.3em;
+    color: #FBC02D; /* Kuning Batman */
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+}
+.sidebar li a.sidebar-link {
+    text-decoration: none;
+    color: #E0E0E0; 
+    display: flex; 
+    align-items: center;
+    gap: 12px; /* Sedikit kurangi jarak ikon dan teks */
+    padding: 15px 30px; 
+    width: 100%; 
+    height: 100%; 
+    box-sizing: border-box; 
+    font-size: 1.05rem; 
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out, border-left-color 0.25s ease-in-out, padding-left 0.25s ease-in-out;
+    border-left: 4px solid transparent; /* Indikator aktif awal transparan */
+}
+.sidebar li a.sidebar-link i { /* Styling untuk ikon di sidebar */
+    width: 20px; /* Beri lebar tetap agar teks sejajar */
+    text-align: center;
+}
+.sidebar li {
+    padding: 0; 
+    cursor: pointer;
+    display: flex; 
+    transition: none; /* Transisi utama ada di <a> */
+}
+.sidebar li.active a.sidebar-link, 
+.sidebar li:hover a.sidebar-link {
+    background: #FBC02D; /* Kuning Batman untuk background aktif/hover */
+    color: #121212;       /* Teks gelap kontras dengan kuning */
+    border-left-color: #121212; /* Border kiri lebih gelap saat aktif */
+    padding-left: 35px; /* Efek indent saat aktif/hover */
+}
+.sidebar li.active i, 
+.sidebar li:hover i {
+    color: #121212; /* Ikon juga menjadi gelap */
+}
+.sidebar .bottom-link a { /* Styling khusus untuk link bawah */
+    color: #FBC02D !important; /* Paksa warna kuning, !important jika perlu */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+.sidebar .bottom-link a:hover {
+    background-color: rgba(251, 192, 45, 0.1); /* Efek hover halus untuk link bawah */
+    color: #FFD700 !important;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    margin-left: 230px; /* Sesuaikan dengan lebar sidebar kiri */
+    margin-right: 280px; /* Sesuaikan dengan lebar panel profil kanan */
+}
+.main-content h1.chart-title { /* Lebih spesifik untuk judul utama konten */
+    color: #FBC02D; /* Kuning Batman */
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 25px;
+    margin-bottom: 35px;
+}
+.card {
+    background: #212121; /* Abu-abu sedikit lebih terang untuk kartu */
+    color: #E0E0E0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    padding: 25px 20px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    border: 1px solid #333; /* Border halus */
+}
+.card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(251, 192, 45, 0.2); /* Bayangan kuning saat hover */
+    border-color: #FBC02D; /* Border kuning saat hover */
+}
+.card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: #BDBDBD; /* Warna judul kartu lebih lembut */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FBC02D; /* Angka statistik dengan warna kuning */
+    margin: 0;
+}
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #BDBDBD; /* Teks placeholder grafik */
+}
+.profile-panel {
+    position: fixed; /* Membuat panel tetap saat scroll */
+    right: 0; 
+    top: 0;
+    width: 280px; /* Lebar panel profil */
+    height: 100vh; /* Tinggi penuh */
+    background: #1A1A1A; /* Sama seperti sidebar */
+    border-left: 1px solid #000; /* Garis pemisah */
+    padding: 25px;
+    color: #E0E0E0;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    overflow-y: auto; /* Scroll jika konten melebihi tinggi */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 990; /* Di bawah sidebar kiri, di atas backdrop jika panel kanan juga pakai backdrop */
+    transition: right 0.3s ease-in-out; /* Transisi untuk slide in/out panel kanan */
+}
+
+.profile-info {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.profile-img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    border: 3px solid #FBC02D; /* Border kuning pada foto profil */
+    box-shadow: 0 0 10px rgba(251, 192, 45, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #212121; /* Latar belakang jika tidak ada gambar */
+    margin: 0 auto 15px auto; 
+    object-fit: cover; /* Agar gambar tidak gepeng */
+}
+.profile-img svg {
+    display: block;
+    margin: 0 auto;
+    fill: #FBC02D; /* Warna ikon SVG */
+}
+.profile-info h4 {
+    margin-bottom: 5px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #FBC02D; /* Nama pengguna dengan warna kuning */
+}
+.profile-details > div {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+    color: #BDBDBD; /* Detail profil lebih lembut */
+}
+.profile-details a { /* Styling untuk link "Isi Preferensi" */
+    color: #FBC02D;
+    text-decoration: none;
+    font-weight: 500;
+}
+.profile-details a:hover {
+    text-decoration: underline;
+    color: #FFD700;
+}
+.schedule {
+    background: #212121; /* Latar belakang konsisten dengan kartu */
+    padding: 18px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-top: 10px;
+}
+.schedule h5 {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: #FBC02D; /* Judul bagian jadwal */
+    font-weight: 600;
+}
+.schedule ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.9rem;
+    color: #E0E0E0;
+    margin-bottom: 0;
+}
+.schedule li {
+    margin-bottom: 10px;
+}
+.program-card-sm {
+    background: #2C2C2C; /* Sedikit lebih gelap untuk kartu kecil */
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border: 1px solid #444;
+    transition: background-color 0.25s ease-in-out, transform 0.2s ease-out;
+}
+.program-card-sm:hover {
+    background-color: #353535;
+    transform: translateX(-3px); /* Sedikit geser ke kiri saat hover */
+}
+.program-card-sm h6 {
+    font-size: 0.98rem;
+    color: #FBC02D; /* Judul program kecil */
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+.program-card-sm p {
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+    color: #BDBDBD;
+}
+.program-card-sm img {
+    width: 100%;
+    max-height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    border: 1px solid #444;
+}
+.program-card-sm a {
+    font-size: 0.85rem;
+    color: #FBC02D;
+    margin-right: 10px;
+    text-decoration: none;
+}
+.program-card-sm a:hover {
+    text-decoration: underline;
+    color: #FFD700;
+}
+/* Tombol Hapus di Jadwal & Favorit */
+.program-card-sm form button[type="submit"] {
+    background: none;
+    border: none;
+    color: #FF8A80; /* Merah muda lembut untuk hapus */
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.85rem;
+    transition: color 0.25s ease-in-out;
+}
+.program-card-sm form button[type="submit"]:hover {
+    color: #FF5252; 
+}
+
+@media (max-width: 1199px) { 
+    .profile-panel { 
+        position: fixed; 
+        right: -280px; 
+        width: 280px; 
+        transition: right 0.3s ease-in-out;
+
+        border-left: none;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+        z-index: 999; 
+    }
+    .main-content { 
+        margin-right: 0; 
+        margin-left: 230px;
+    }
+    .profile-panel.active { 
+        right: 0;
+    }
+}
+
+@media (max-width: 991px) { 
+    .sidebar { 
+        left: -230px; /* Sembunyikan sidebar kiri */
+        
+    }
+    .sidebar.active { /* Class untuk menampilkan sidebar kiri */
+        left: 0;
+    }
+    .layout {
+        /* flex-direction: column; Hapus ini agar main content tidak pindah ke bawah */
+    }
+    .sidebar .logo {
+        margin-bottom: 15px;
+    }
+    .sidebar ul {
+        /* display: flex; */ /* Hapus agar tetap vertikal */
+        /* flex-wrap: wrap; */
+        /* justify-content: center; */
+    }
+    .sidebar li a.sidebar-link {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        border-left-width: 2px; /* Border lebih tipis */
+        /* justify-content: center; */ /* Hapus agar tetap rata kiri */
+    }
+    .sidebar li span { /* Sembunyikan teks di mobile jika terlalu ramai, atau sesuaikan */
+        /* display: none; */ /* Opsional: jika ingin hanya ikon */
+    }
+    .sidebar .bottom-link {
+        /* display: none; */ /* Biarkan tampil jika muat */
+    }
+    .main-content { 
+        padding: 20px; 
+        margin-left: 0; /* Konten utama mengisi penuh saat sidebar kiri tersembunyi */
+        margin-right: 0; /* Konten utama mengisi penuh saat panel kanan tersembunyi */
+    }
+    .dashboard-cards {
+        grid-template-columns: 1fr; /* Kartu jadi satu kolom */
+        gap: 20px;
+    }
+    .main-content h1.chart-title {
+        font-size: 1.6em;
+        text-align: left; /* Rata kiri di mobile */
+        margin-bottom: 20px;
+    }
+    .profile-panel { /* Panel profil juga di-toggle di mobile */
+        right: -280px; /* Sembunyikan */
+        width: 250px; /* Bisa sedikit lebih kecil di mobile */
+        top: 0; /* Mulai dari atas */
+        height: 100vh; /* Tinggi penuh */
+        margin-top: 0;
+    }
+}
+
+/* Tombol Toggle untuk Sidebar (tambahkan di HTML jika belum ada) */
+.sidebar-toggle-btn, .profile-toggle-btn {
+    display: none; /* Sembunyikan di desktop */
+    position: fixed; /* Tombol tetap terlihat saat scroll */
+    top: 15px;
+    z-index: 1010; /* Di atas segalanya */
+    background-color: #FBC02D;
+    color: #121212;
+    border: none;
+    padding: 8px 12px;
+    line-height: 1; /* Agar ikon di tengah vertikal */
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.sidebar-toggle-btn {
+    left: 15px;
+}
+.profile-toggle-btn {
+    right: 15px;
+}
+@media (max-width: 991px) { /* Tampilkan tombol toggle di mobile untuk sidebar kiri */
+    .sidebar-toggle-btn {
+        display: block;
+    }
+}
+@media (max-width: 1199px) { /* Tampilkan tombol toggle di tablet/mobile untuk panel profil */
+    .profile-toggle-btn {
+        display: block;
+    }
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998; /* Di bawah sidebar/panel aktif, di atas konten */
+}
+.sidebar-backdrop.active {
+    display: block;
+}
+
+/* Tambahkan di akhir file dashboard.css */
+
+.fitness-characteristics {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #1A1A1A; /* Sedikit beda dari kartu agar menonjol sebagai section */
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.fitness-characteristics h2 {
+    color: #FBC02D;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.char-card {
+    background: #212121;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.char-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(251, 192, 45, 0.15);
+}
+
+.char-card h4 {
+    color: #FBC02D;
+    margin-top: 0; /* Hapus margin atas default h4 */
+    margin-bottom: 18px;
+    font-size: 1.3em;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.char-card ul {
+    list-style-type: none; /* Hapus bullet default, kita gunakan pseudo-element */
+    padding-left: 0;
+    color: #E0E0E0;
+    font-size: 0.95em;
+    line-height: 1.7;
+}
+
+.char-card ul li {
+    padding-left: 20px; /* Ruang untuk custom bullet */
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.char-card ul li::before {
+    content: "\f0da"; /* Font Awesome ikon (chevron-right atau bisa diganti) */
+    font-family: "Font Awesome 5 Free"; /* Pastikan Font Awesome termuat */
+    font-weight: 900; /* Untuk ikon solid */
+    color: #FBC02D;
+    position: absolute;
+    left: 0;
+    top: 1px; /* Sesuaikan posisi vertikal ikon */
+}
+
+.char-card ul li strong {
+    color: #F0F0F0; /* Sedikit lebih terang untuk label */
+}
