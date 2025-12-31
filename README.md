@@ -43,6 +43,20 @@ Sistem menggunakan data historis pengguna dan data program latihan sebagai dasar
 Media Edukasi Kebugaran
 Fitur rekomendasi latihan individual (exercise) membantu pengguna memahami jenis latihan, otot yang dilatih, serta alat yang digunakan.
 
+![1](https://github.com/user-attachments/assets/11e7a679-7ec4-4f2a-b22a-e6509aebdf94)
+![dashboard](https://github.com/user-attachments/assets/207d739e-22ea-4055-a005-e7045af40b40)
+![preferensi](https://github.com/user-attachments/assets/a527a27c-5a7e-464d-9062-56a860073d67)
+![preferensi1](https://github.com/user-attachments/assets/172c55d3-ed9d-4dfc-9ae7-f26419398d21)
+![profile](https://github.com/user-attachments/assets/8303a070-c9f6-41cb-9341-e6ee14e60eba)
+![rekomendasi 1](https://github.com/user-attachments/assets/9b0a0b06-9330-4f97-8146-d092e42cf2a8)
+![rekomendasi 2](https://github.com/user-attachments/assets/dedc47af-e3c8-430e-b218-bdc668df55d6)
+![rekomendasi](https://github.com/user-attachments/assets/3d9e7eee-bb32-4720-a6ae-dcdf25518c2a)
 
-![rekomendasi](https://github.com/user-attachments/assets/4110e4cb-2e30-44a9-aa6f-661eb334d8f5)
+
+
+
+
+
+
+
 
