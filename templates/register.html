@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-lg"> <!-- Sedikit lebih lebar untuk form yang lebih banyak -->
+        <div class="bg-gray-900/70 border border-yellow-400/30 rounded-xl p-8 backdrop-blur-sm shadow-lg animate-slide-in">
+            <div class="text-center mb-8">
+                <img src="{{ url_for('static', filename='bat.jpg') }}" alt="Logo FitBat" class="w-20 h-20 rounded-full mx-auto border-4 border-yellow-400/50 mb-4">
+                <h1 class="text-3xl font-black text-white tracking-wider">REGISTER</h1>
+                <p class="text-yellow-400/80 text-sm mt-1">Bergabunglah dengan Project Batman.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="mb-4 p-3 rounded-md text-sm {{ 'bg-red-500/20 text-red-300' if category == 'error' else 'bg-green-500/20 text-green-300' }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('register') }}" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-300 mb-1">Nama Lengkap*</label>
+                        <input type="text" id="nama" name="nama" required class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-300 mb-1">Username*</label>
+                        <input type="text" id="username" name="username" required class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password*</label>
+                    <input type="password" id="password" name="password" required class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="usia" class="block text-sm font-medium text-gray-300 mb-1">Usia*</label>
+                        <input type="number" id="usia" name="usia" required class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                    <div>
+                        <label for="jenis_kelamin" class="block text-sm font-medium text-gray-300 mb-1">Jenis Kelamin*</label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" required class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                            <option value="" disabled selected>Pilih...</option>
+                            <option value="Pria">Pria</option>
+                            <option value="Wanita">Wanita</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="berat" class="block text-sm font-medium text-gray-300 mb-1">Berat (kg)</label>
+                        <input type="number" id="berat" name="berat" class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                    <div>
+                        <label for="tinggi" class="block text-sm font-medium text-gray-300 mb-1">Tinggi (cm)</label>
+                        <input type="number" id="tinggi" name="tinggi" class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                     <div>
+                        <label for="gol_darah" class="block text-sm font-medium text-gray-300 mb-1">Gol. Darah</label>
+                        <input type="text" id="gol_darah" name="gol_darah" class="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <button type="submit"
+                            class="w-full flex items-center justify-center py-3 px-4 rounded-lg transition duration-300 bg-yellow-400 text-black font-bold hover:bg-yellow-500 hover:scale-105 transform">
+                        <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                        <span>Register</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-400">
+                    Sudah punya akun? 
+                    <a href="{{ url_for('login') }}" class="font-semibold text-yellow-400 hover:text-yellow-300 hover:underline">
+                        Login di sini
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

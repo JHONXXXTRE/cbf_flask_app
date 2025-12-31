@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Detail: {{ program['Nama Program Latihan'] | default('Detail Program') }} - Batman Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        /* Custom scrollbar */
+        body {
+            font-family: 'Poppins', sans-serif; /* Tetap menggunakan Poppins jika diinginkan, atau default Tailwind */
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a202c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FBC02D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700;
+        }
+        .description-content p {
+             white-space: pre-wrap;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'], // Menjadikan Poppins sebagai font default jika diinginkan
+                    },
+                    animation: {
+                        'bat-signal': 'batSignal 3s ease-in-out infinite',
+                        'slide-in': 'slideInFromDark 0.8s ease-out',
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'subtle-pulse': 'subtlePulse 2s infinite ease-in-out'
+                    },
+                    keyframes: {
+                        batSignal: {
+                            '0%, 100%': { opacity: '0.7', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.1)' },
+                        },
+                        slideInFromDark: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 5px #FBC02D)' },
+                            '50%': { filter: 'drop-shadow(0 0 15px #FBC02D)' },
+                        },
+                        subtlePulse: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.03)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-gray-200 font-sans overflow-x-hidden animate-gradient" style="background-size: 200% 200%;">
+    <!-- Animated Batman Background -->
+    <div class="fixed inset-0 opacity-80 pointer-events-none z-[-1]">
+        <div class="absolute top-10 right-10 w-40 h-40 bg-yellow-400 rounded-full blur-2xl animate-bat-signal"></div>
+        <div class="absolute top-20 left-20 w-32 h-32 opacity-100 text-yellow-400 drop-shadow-[0_0_80px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-40 right-32 w-24 h-24 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform animate-bat-bounce">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-spin-slow">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-20 left-1/3 w-20 h-20 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,0.9)] transform rotate-90 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <!-- Tambahan animasi ramai -->
+        <div class="absolute top-1/4 left-1/2 w-28 h-28 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform -rotate-12 animate-bat-bounce">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-10 left-10 w-20 h-20 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,1)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/3 right-1/4 w-32 h-32 opacity-100 text-yellow-400 drop-shadow-[0_0_60px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-1/4 right-1/2 w-24 h-24 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-bat-bounce">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/6 left-1/6 w-16 h-16 opacity-100 text-yellow-300 drop-shadow-[0_0_30px_rgba(253,224,71,0.9)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <!-- Gradient bawah -->
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-yellow-200 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-8 animate-slide-in">
+        <!-- Header -->
+        <header class="flex justify-between items-center py-6 mb-8 md:mb-12">
+            <div class="logo">
+                <a href="{{ url_for('dashboard') }}" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 animate-glow" title="Dashboard">
+                    <i data-lucide="bat" class="w-16 h-16 md:w-20 md:h-20"></i>
+                </a>
+            </div>
+            <nav>
+                <ul class="flex space-x-4 md:space-x-6">
+                    <li><a href="{{ url_for('dashboard') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold text-base md:text-lg transition-colors duration-200">Home</a></li>
+                    <li><a href="{{ url_for('form_rekomendasi') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold text-base md:text-lg transition-colors duration-200">Isi Preferensi Program</a></li>
+                    <li><a href="{{ url_for('exercise') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold text-base md:text-lg transition-colors duration-200">Beginner Exercises</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Title -->
+        <div class="text-center mb-10 md:mb-16">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wider drop-shadow-lg">
+                <span class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 bg-clip-text text-transparent">PROGRAM DETAIL</span>
+            </h1>
+        </div>
+
+        {% if program %}
+        <div class="bg-gradient-to-br from-gray-900/95 to-black/95 border border-yellow-400/30 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden p-6 md:p-10">
+            {% if program.gambar %}
+                <img src="{{ url_for('static', filename=program.gambar) }}" alt="{{ program['Nama Program Latihan'] | default('Gambar Program') }}" class="w-full h-auto max-h-96 object-contain rounded-lg mb-6 md:mb-8 shadow-lg border-2 border-yellow-400/40">
+            {% endif %}
+
+            <h2 class="text-2xl md:text-3xl font-bold text-yellow-400 mb-6 flex items-center">
+                <i data-lucide="clipboard-list" class="w-7 h-7 md:w-8 md:h-8 mr-3"></i>
+                {{ program['Nama Program Latihan'] | default('Nama Program Tidak Ada') }}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-300 text-base md:text-lg mb-8">
+                <p><strong class="text-yellow-500">Tujuan:</strong> {{ program['Tujuan Program'] | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Jenis:</strong> {{ program['Jenis Latihan Program'] | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Waktu Ideal:</strong> {{ program['Waktu Ideal Program'] | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Tempat:</strong> {{ program['Tempat Program'] | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Durasi:</strong> {{ program['Durasi Program (menit)'] | default('N/A') }} menit</p>
+                <p><strong class="text-yellow-500">Level:</strong> {{ program['Tingkat Kebugaran Program'] | default('N/A') }}</p>
+            </div>
+
+            <div class="description-content mb-8">
+                <h3 class="text-xl md:text-2xl font-semibold text-yellow-300 mb-4 flex items-center">
+                    <i data-lucide="file-text" class="w-6 h-6 mr-2"></i>
+                    Deskripsi Program
+                </h3>
+                <div class="text-gray-300 leading-relaxed prose prose-invert max-w-none">{{ program['Deskripsi Program HTML'] | default('Deskripsi tidak tersedia.') | safe }}</div>
+            </div>
+
+            {% if program.video_url %}
+                <div class="mb-8">
+                    <h3 class="text-xl md:text-2xl font-semibold text-yellow-300 mb-4 flex items-center">
+                        <i data-lucide="youtube" class="w-6 h-6 mr-2"></i>
+                        Video Tutorial
+                    </h3>
+                     {% if program.yt_id %}
+                        <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg border-2 border-yellow-400/40">
+                            <iframe src="https://www.youtube.com/embed/{{ program.yt_id }}" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                     {% else %}
+                        <p class="text-gray-400">Tidak dapat memuat video. URL tidak valid.</p>
+                     {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="mt-10 md:mt-12 flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
+                 {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('toggle_favorite_program') }}" method="POST" class="w-full sm:w-auto">
+                        <input type="hidden" name="program_id" value="{{ program['ID Program'] }}">
+                        {% if program.is_favorited %}
+                            <input type="hidden" name="action" value="unfavorite">
+                            <button type="submit" class="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 text-sm">
+                                <i data-lucide="heart-crack" class="w-4 h-4 mr-2"></i>Hapus Favorit
+                            </button>
+                        {% else %}
+                            <input type="hidden" name="action" value="favorite">
+                            <button type="submit" class="w-full flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 text-sm">
+                                <i data-lucide="heart" class="w-4 h-4 mr-2"></i>Simpan Favorit
+                            </button>
+                        {% endif %}
+                    </form>
+                 {% else %}
+                    <p class="text-gray-400 text-sm">Login untuk menyimpan program ke favorit atau jadwal.</p>
+                 {% endif %}
+
+                <a href="{{ url_for('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 text-sm">
+                    <i data-lucide="arrow-left-circle" class="w-4 h-4 mr-2"></i>Kembali ke Dashboard
+                </a>
+            </div>
+        </div>
+        {% else %}
+            <div class="text-center py-10 px-6 bg-gray-800/50 rounded-lg border border-gray-700">
+                <i data-lucide="search-x" class="w-16 h-16 text-yellow-500 mx-auto mb-4"></i>
+                <p class="text-xl text-gray-300">Detail program tidak ditemukan.</p>
+            </div>
+        {% endif %}
+
+        <!-- Epic Footer -->
+        <div class="text-center mt-12 md:mt-16 p-6 md:p-8 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl backdrop-blur-sm border border-yellow-400/20">
+            <div class="flex justify-center items-center mb-3 md:mb-4">
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mr-2"></i>
+                <p class="text-gray-300 text-base md:text-lg font-semibold">© {{ current_year | default('2024') }} Batman Training Program</p>
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 ml-2"></i>
+            </div>
+            <p class="text-yellow-400 font-bold text-lg md:text-xl tracking-wider">
+                "KNOWLEDGE IS POWER" 🦇
+            </p>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

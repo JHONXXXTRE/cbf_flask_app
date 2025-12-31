@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner Exercise Recommendations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        /* Custom scrollbar (opsional, untuk konsistensi tema gelap) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a202c; /* Warna track lebih gelap dari bg-gray-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FBC02D; /* Warna kuning Batman */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700; /* Kuning lebih terang saat hover */
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bat-signal': 'batSignal 3s ease-in-out infinite',
+                        'slide-in': 'slideInFromDark 0.8s ease-out',
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'subtle-pulse': 'subtlePulse 2s infinite ease-in-out'
+                    },
+                    keyframes: {
+                        batSignal: {
+                            '0%, 100%': { opacity: '0.7', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.1)' },
+                        },
+                        slideInFromDark: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 5px #FBC02D)' },
+                            '50%': { filter: 'drop-shadow(0 0 15px #FBC02D)' },
+                        },
+                        subtlePulse: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.03)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-gray-200 font-sans overflow-x-hidden">
+    <!-- Animated Batman Background -->
+    <div class="fixed inset-0 opacity-80 pointer-events-none z-[-1]">
+        <div class="absolute top-10 right-10 w-40 h-40 bg-yellow-400 rounded-full blur-2xl animate-bat-signal"></div>
+        <div class="absolute top-20 left-20 w-32 h-32 opacity-100 text-yellow-400 drop-shadow-[0_0_80px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-40 right-32 w-24 h-24 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform animate-bat-bounce">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-spin-slow">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-20 left-1/3 w-20 h-20 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,0.9)] transform rotate-90 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <!-- Tambahan animasi ramai -->
+        <div class="absolute top-1/4 left-1/2 w-28 h-28 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform -rotate-12 animate-bat-bounce">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-10 left-10 w-20 h-20 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,1)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/3 right-1/4 w-32 h-32 opacity-100 text-yellow-400 drop-shadow-[0_0_60px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-1/4 right-1/2 w-24 h-24 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-bat-bounce">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/6 left-1/6 w-16 h-16 opacity-100 text-yellow-300 drop-shadow-[0_0_30px_rgba(253,224,71,0.9)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <!-- Gradient bawah -->
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-yellow-200 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-8 animate-slide-in">
+        <!-- Header -->
+        <header class="flex justify-between items-center py-6 mb-8 md:mb-12">
+            <div class="logo">
+                <a href="{{ url_for('dashboard') }}" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 animate-glow" title="Dashboard">
+                    <i data-lucide="bat" class="w-16 h-16 md:w-20 md:h-20"></i>
+                </a>
+            </div>
+            <nav>
+                <ul class="flex space-x-4 md:space-x-6">
+                    <li><a href="{{ url_for('dashboard') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold text-base md:text-lg transition-colors duration-200">Home</a></li>
+                    <li><a href="{{ url_for('form_rekomendasi') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold text-base md:text-lg transition-colors duration-200">Isi Preferensi Program</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Title -->
+        <div class="text-center mb-10 md:mb-16">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wider drop-shadow-lg">
+                <span class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 bg-clip-text text-transparent">TARGET YOUR TRAINING</span>
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl mt-3">Select Muscle & Equipment for Beginner Exercises</p>
+        </div>
+
+        <!-- Main Form Container -->
+        <div class="bg-gradient-to-br from-gray-900/95 to-black/95 border border-yellow-400/30 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden">
+            <form method="POST" action="{{ url_for('exercises_recommendations') }}" class="space-y-0">
+                <input type="hidden" name="selectedPrimaryMuscle" id="selectedPrimaryMuscle" value="{{ selectedPrimaryMuscle }}">
+                <input type="hidden" name="pageSource" value="beginner">
+                <input type="hidden" name="user_input" id="user_input_field">
+
+                <!-- Muscle Selection Section -->
+                <div class="p-6 md:p-8 lg:p-10">
+                    <h2 class="text-2xl md:text-3xl font-bold text-yellow-400 mb-6 flex items-center">
+                        <i data-lucide="target" class="w-7 h-7 md:w-8 md:h-8 mr-3 animate-pulse"></i>
+                        1. Select Target Muscle
+                    </h2>
+                    <div class="flex flex-col lg:flex-row items-center justify-around gap-6 lg:gap-8">
+                        <!-- Left Muscle List -->
+                        <div class="w-full lg:w-1/4 space-y-3">
+                            <!-- Loop through primary muscles -->
+                            {% for muscle in primary_muscles[:4] %}
+                            <button type="button" data-muscle="{{ muscle }}"
+                                    class="primaryMuscle w-full py-3 px-4 bg-gray-800 text-gray-200 rounded-lg border-2 border-gray-600 hover:border-yellow-400 hover:text-yellow-300 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 transition-all duration-200 text-left text-sm md:text-base {% if muscle == selectedPrimaryMuscle %}border-yellow-500 bg-yellow-500/20 text-yellow-300 font-semibold{% endif %}"
+                                    onclick="selectPrimaryMuscle('{{ muscle }}')">
+                                {{ muscle }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <!-- Muscle Picture -->
+                        <div class="w-full lg:w-2/5 flex justify-center my-4 lg:my-0">
+                            <img src="{{ url_for('static', filename='beginner.jpg') }}" alt="Human Body Picture" class="max-w-xs md:max-w-sm rounded-lg shadow-xl border-2 border-yellow-400/40">
+                        </div>
+                        <!-- Right Muscle List -->
+                        <div class="w-full lg:w-1/4 space-y-3">
+                            <!-- Loop through primary muscles -->
+                            {% for muscle in primary_muscles[4:] %}
+                            <button type="button" data-muscle="{{ muscle }}"
+                                    class="primaryMuscle w-full py-3 px-4 bg-gray-800 text-gray-200 rounded-lg border-2 border-gray-600 hover:border-yellow-400 hover:text-yellow-300 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 transition-all duration-200 text-left text-sm md:text-base {% if muscle == selectedPrimaryMuscle %}border-yellow-500 bg-yellow-500/20 text-yellow-300 font-semibold{% endif %}"
+                                    onclick="selectPrimaryMuscle('{{ muscle }}')">
+                                {{ muscle }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment Selection Section -->
+                <div class="p-6 md:p-8 lg:p-10 border-t border-yellow-400/20">
+                    <h2 class="text-2xl md:text-3xl font-bold text-yellow-400 mb-6 flex items-center">
+                        <i data-lucide="dumbbell" class="w-7 h-7 md:w-8 md:h-8 mr-3 animate-pulse"></i>
+                        2. Select Equipment
+                    </h2>
+                    {# The hidden input selectedEquipment might be redundant if backend uses 'equipment' from radio buttons #}
+                    {# <input type="hidden" name="selectedEquipment" value="{{ selectedEquipment }}"> #}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {% set all_equipment_options = ['Body Only', 'Bands', 'Barbell', 'Cable', 'Dumbbell', 'Exercise Ball', 'E-Z Curl Bar', 'Foam Roll', 'Kettlebells', 'Machine', 'Medicine Ball', 'Other'] %}
+                        {% for option in all_equipment_options %}
+                        <label for="equip_{{ option|replace(' ', '_')|lower }}" class="flex items-center space-x-3 p-3.5 md:p-4 bg-gray-800/70 rounded-xl border-2 border-gray-700 hover:border-yellow-400 hover:bg-gray-700/90 transition-all duration-300 cursor-pointer group/item has-[:checked]:border-yellow-500 has-[:checked]:bg-yellow-500/10">
+                            <input type="radio" name="equipment" value="{{ option }}" id="equip_{{ option|replace(' ', '_')|lower }}" 
+                                   class="w-4 h-4 md:w-5 md:h-5 text-yellow-400 bg-gray-700 border-gray-600 rounded-full focus:ring-yellow-400 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 appearance-none checked:bg-yellow-400 checked:ring-1 checked:ring-yellow-500 checked:border-transparent">
+                            <span class="text-gray-200 cursor-pointer text-sm md:text-base group-hover/item:text-yellow-300 transition-colors group-has-[:checked]/item:text-yellow-300">{{ option | capitalize }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="p-6 md:p-8 lg:p-10 border-t border-yellow-400/20">
+                    <button type="submit"
+                            class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-black py-3.5 md:py-4 px-6 md:px-8 text-base md:text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-400/50 flex items-center justify-center group transform hover:-translate-y-1">
+                        <i data-lucide="zap" class="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3 group-hover:animate-bounce"></i>
+                        <span class="tracking-wide">GET EXERCISE RECOMMENDATIONS</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 md:w-6 md:h-6 ml-2 md:ml-3 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Epic Footer -->
+        <div class="text-center mt-12 md:mt-16 p-6 md:p-8 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl backdrop-blur-sm border border-yellow-400/20">
+            <div class="flex justify-center items-center mb-3 md:mb-4">
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mr-2"></i>
+                <p class="text-gray-300 text-base md:text-lg font-semibold">© {{ current_year | default('2024') }} Batman Training Program</p>
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 ml-2"></i>
+            </div>
+            <p class="text-yellow-400 font-bold text-lg md:text-xl tracking-wider">
+                "CHOOSE YOUR PATH TO STRENGTH" 🦇
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function selectPrimaryMuscle(muscle) {
+            document.querySelector("#selectedPrimaryMuscle").value = muscle;
+            document.cookie = `selectedPrimaryMuscle=${muscle};path=/`; // Persist for potential reloads or other uses
+
+            var muscleButtons = document.querySelectorAll('.primaryMuscle');
+            muscleButtons.forEach(function (btn) {
+                btn.classList.remove('border-yellow-500', 'bg-yellow-500/20', 'text-yellow-300', 'font-semibold');
+                // Ensure base styles are present if they were somehow removed, though Tailwind classes usually persist
+                // btn.classList.add('bg-gray-800', 'text-gray-200', 'border-gray-600'); 
+                if (btn.dataset.muscle === muscle) {
+                    btn.classList.add('border-yellow-500', 'bg-yellow-500/20', 'text-yellow-300', 'font-semibold');
+                }
+            });
+        }
+
+        function clearSelectedPrimaryMuscle() {
+            document.querySelector("#selectedPrimaryMuscle").value = "";
+            document.cookie = 'selectedPrimaryMuscle=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT'; 
+
+            var muscleButtons = document.querySelectorAll('.primaryMuscle');
+            muscleButtons.forEach(function (btn) {
+                btn.classList.remove('border-yellow-500', 'bg-yellow-500/20', 'text-yellow-300', 'font-semibold');
+            });
+        }
+
+        document.querySelector('form[action="{{ url_for("exercises_recommendations") }}"]').addEventListener('submit', function(e) {
+            var selectedMuscle = document.querySelector('#selectedPrimaryMuscle').value;
+            var selectedEquipmentInput = document.querySelector('input[name="equipment"]:checked');
+            var selectedEquipmentValue = selectedEquipmentInput ? selectedEquipmentInput.value : '';
+
+            var userInput = JSON.stringify({
+                primaryMuscles: selectedMuscle ? [selectedMuscle] : [], 
+                equipment: selectedEquipmentValue ? [selectedEquipmentValue] : [] 
+            });
+            document.getElementById('user_input_field').value = userInput;
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pre-check radio button if selectedEquipment is passed from backend
+            const preSelectedEquipmentValue = "{{ selectedEquipment | default('') }}";
+            if (preSelectedEquipmentValue) {
+                const radioToSelect = document.querySelector(`input[name="equipment"][value="${preSelectedEquipmentValue}"]`);
+                if (radioToSelect) {
+                    radioToSelect.checked = true;
+                }
+            }
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profil{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-2xl space-y-8">
+        <div class="bg-gray-900/70 border border-yellow-400/30 rounded-xl p-8 backdrop-blur-sm shadow-lg">
+            <h2 class="text-center text-3xl font-extrabold text-yellow-400 mb-6">
+                Edit Profil
+            </h2>
+            
+            <div class="text-center mb-8">
+                <img src="{{ current_user.foto or url_for('static', filename='images/default-avatar.png') }}" 
+                     alt="Foto Profil" 
+                     class="w-32 h-32 rounded-full mx-auto border-4 border-yellow-400/60 object-cover">
+            </div>
+
+            <form class="space-y-6" method="POST" action="{{ url_for('profile') }}" enctype="multipart/form-data">
+                
+                <div>
+                    <label for="foto" class="block text-sm font-medium text-gray-300">Ganti Foto Profil</label>
+                    <div class="mt-1">
+                        <input id="foto" name="foto" type="file" accept="image/png, image/jpeg, image/gif"
+                               class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4
+                                      file:rounded-full file:border-0 file:text-sm file:font-semibold
+                                      file:bg-yellow-400/20 file:text-yellow-300 hover:file:bg-yellow-400/30">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                    <div class="mt-1">
+                        <input type="text" id="username" name="username" value="{{ current_user.username }}" disabled
+                               class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-gray-400 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm cursor-not-allowed">
+                        <p class="mt-1 text-xs text-gray-500">Username tidak dapat diubah.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="nama" class="block text-sm font-medium text-gray-300">Nama Lengkap</label>
+                    <div class="mt-1">
+                        <input type="text" id="nama" name="nama" value="{{ current_user.nama or '' }}" required
+                               class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-800 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="berat" class="block text-sm font-medium text-gray-300">Berat Badan (kg)</label>
+                        <div class="mt-1">
+                            <input type="number" id="berat" name="berat" value="{{ current_user.berat or '' }}"
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-800 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="tinggi" class="block text-sm font-medium text-gray-300">Tinggi Badan (cm)</label>
+                        <div class="mt-1">
+                            <input type="number" id="tinggi" name="tinggi" value="{{ current_user.tinggi or '' }}"
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-800 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="gol_darah" class="block text-sm font-medium text-gray-300">Golongan Darah</label>
+                    <div class="mt-1">
+                        <select id="gol_darah" name="gol_darah"
+                                class="block w-full pl-3 pr-10 py-2 text-base border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm rounded-md">
+                            <option value="" {% if not current_user.gol_darah %}selected{% endif %}>-- Pilih --</option>
+                            <option value="A" {% if current_user.gol_darah == 'A' %}selected{% endif %}>A</option>
+                            <option value="B" {% if current_user.gol_darah == 'B' %}selected{% endif %}>B</option>
+                            <option value="AB" {% if current_user.gol_darah == 'AB' %}selected{% endif %}>AB</option>
+                            <option value="O" {% if current_user.gol_darah == 'O' %}selected{% endif %}>O</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-4 pt-4">
+                    <a href="{{ url_for('dashboard') }}" class="inline-flex justify-center py-2 px-4 border border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                        Batal
+                    </a>
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors">
+                        Simpan Perubahan
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

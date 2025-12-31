@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Kebugaran{% endblock %}
+
+{% block content %}
+<div class="flex flex-col lg:flex-row min-h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-900/80 border-r border-yellow-500/20 p-5 flex flex-col space-y-6 lg:space-y-10 backdrop-blur-lg z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="flex items-center space-x-3">
+            <img src="{{ url_for('static', filename='bat.jpg') }}" alt="Logo FitBat" class="w-12 h-12 rounded-full border-2 border-cyan-400/50">
+            <div class="text-xl font-black text-white tracking-wider">PROJECT BATMAN</div>
+        </div>
+        <nav class="flex-grow">
+            {% from "_macros.html" import nav_item with context %}
+            {{ nav_item('dashboard', 'layout-dashboard', 'Dashboard') }}
+            {% if current_user.is_authenticated %}
+                {{ nav_item('profile', 'user-circle', 'Profile', spacing_class='mt-2') }}
+                {{ nav_item('exercise', 'dumbbell', 'Latihan Beginner', spacing_class='mt-2') }}
+                {{ nav_item('advanced_exercise_form', 'zap', 'Latihan Advanced', spacing_class='mt-2') }}
+                {{ nav_item('history', 'history', 'Riwayat Latihan', spacing_class='mt-2') }}
+                {{ nav_item('form_rekomendasi', 'clipboard-edit', 'Preferensi', spacing_class='mt-2', special_style='preferensi') }}
+                {{ nav_item('logout', 'log-out', 'Logout', spacing_class='mt-8', is_logout=true) }}
+            {% else %}
+                {{ nav_item('login', 'log-in', 'Login', spacing_class='mt-2') }}
+                {{ nav_item('register', 'user-plus', 'Register', spacing_class='mt-2') }}
+            {% endif %}
+        </nav>
+        <!-- Sidebar Footer -->
+        <div class="mt-auto pt-4 border-t border-cyan-500/10">
+            <p class="text-center text-xs text-gray-400 font-semibold">PROJECT BATMAN</p>
+            <p class="text-center text-xs text-gray-500">&copy; {{ current_year or '2024' }} - All Rights Reserved</p>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div class="flex-1 p-6 md:p-10 lg:overflow-y-auto w-full lg:ml-64 lg:mr-80">
+        <!-- Mobile Header -->
+        <div class="lg:hidden flex justify-between items-center mb-6">
+            <button id="sidebar-toggle" class="text-white p-2 rounded-md hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <div class="text-lg font-black text-white tracking-wider">PROJECT BATMAN</div>
+            <button id="profile-toggle" class="text-white p-2 rounded-md hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <i data-lucide="user" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-black text-yellow-400 tracking-wider text-center mb-12 animate-slide-in">DASHBOARD KEBUGARAN</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 animate-slide-in" style="animation-delay: 0.2s;">
+            <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm transform hover:-translate-y-1 transition-transform duration-300 shadow-lg">
+                <h3 class="text-lg font-bold text-yellow-400 mb-2">Total Program Latihan</h3>
+                <p class="text-4xl font-black text-white">{{ data.get('total_programs', 0) }}</p>
+            </div>
+            <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm transform hover:-translate-y-1 transition-transform duration-300 shadow-lg">
+                <h3 class="text-lg font-bold text-yellow-400 mb-2">Total Pengguna Historis</h3>
+                <p class="text-4xl font-black text-white">{{ data.get('total_historical_users', 0) }}</p>
+            </div>
+            <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm transform hover:-translate-y-1 transition-transform duration-300 shadow-lg">
+                <h3 class="text-lg font-bold text-yellow-400 mb-2">Total Jenis Latihan</h3>
+                <p class="text-4xl font-black text-white">{{ data.get('total_exercises', 0) }}</p>
+            </div>
+        </div>
+        
+        <!-- Bagian Karakteristik Kebugaran -->
+        <div class="mt-12 animate-slide-in" style="animation-delay: 0.4s;">
+            <h2 class="text-2xl md:text-3xl font-bold text-yellow-400 text-center mb-8">Karakteristik Kebugaran Pengguna</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Karakteristik 1: Atlet / Pekerja Fisik -->
+                <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/70 transition-colors duration-300 shadow-lg hover:shadow-cyan-400/20">
+                    <h4 class="text-xl font-bold text-yellow-400 mb-4">Atlet / Pekerja Fisik</h4>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><strong>Kebugaran:</strong> Sangat tinggi</li>
+                        <li><strong>Kebutuhan:</strong> Program khusus (power, speed, agility)</li>
+                        <li><strong>Durasi Ideal:</strong> 60–90 menit/sesi</li>
+                        <li><strong>Frekuensi:</strong> 5–7 kali/minggu</li>
+                        <li><strong>Kondisi:</strong> Massa otot tinggi, daya tahan sangat baik</li>
+                        <li><strong>Catatan:</strong> Rentan cedera jika tidak terstruktur</li>
+                    </ul>
+                </div>
+
+                <!-- Karakteristik 2: Pekerja Kantoran / Profesional -->
+                <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/70 transition-colors duration-300 shadow-lg hover:shadow-cyan-400/20">
+                    <h4 class="text-xl font-bold text-yellow-400 mb-4">Pekerja Kantoran</h4>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><strong>Kebugaran:</strong> Sedang hingga rendah</li>
+                        <li><strong>Kebutuhan:</strong> Atasi ketegangan otot, jaga kesehatan</li>
+                        <li><strong>Durasi Ideal:</strong> 30–45 menit/sesi</li>
+                        <li><strong>Frekuensi:</strong> 3–4 kali/minggu</li>
+                        <li><strong>Kondisi:</strong> Rentan gangguan postur, kaku otot</li>
+                        <li><strong>Catatan:</strong> Latihan fleksibilitas & kardio disarankan</li>
+                    </ul>
+                </div>
+
+                <!-- Karakteristik 3: Mahasiswa -->
+                <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/70 transition-colors duration-300 shadow-lg hover:shadow-cyan-400/20">
+                    <h4 class="text-xl font-bold text-yellow-400 mb-4">Mahasiswa</h4>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><strong>Kebugaran:</strong> Variatif (rendah–tinggi)</li>
+                        <li><strong>Kebutuhan:</strong> Kebugaran umum, cegah kelelahan mental</li>
+                        <li><strong>Durasi Ideal:</strong> 20–45 menit/sesi</li>
+                        <li><strong>Frekuensi:</strong> 3–5 kali/minggu</li>
+                        <li><strong>Kondisi:</strong> Cenderung duduk lama, stres</li>
+                        <li><strong>Catatan:</strong> HIIT singkat atau yoga cocok</li>
+                    </ul>
+                </div>
+
+                <!-- Karakteristik 4: Individu dengan Berat Badan Berlebih -->
+                <div class="bg-gray-900/70 border border-cyan-400/30 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/70 transition-colors duration-300 shadow-lg hover:shadow-cyan-400/20">
+                    <h4 class="text-xl font-bold text-yellow-400 mb-4">Berat Badan Berlebih</h4>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><strong>Kebugaran:</strong> Umumnya rendah-sedang</li>
+                        <li><strong>Kebutuhan:</strong> Pembakaran lemak, kesehatan jantung</li>
+                        <li><strong>Durasi Ideal:</strong> Mulai 20–30 menit, bertahap naik</li>
+                        <li><strong>Frekuensi:</strong> 4–5 kali/minggu</li>
+                        <li><strong>Kondisi:</strong> Risiko nyeri sendi, butuh low-impact</li>
+                        <li><strong>Catatan:</strong> Kardio (sepeda, renang) & kekuatan dianjurkan</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Panel Profil Kanan -->
+    <div id="profile-panel" class="fixed top-0 right-0 h-full w-80 bg-gray-900/80 border-l border-yellow-500/20 p-6 overflow-y-auto backdrop-blur-lg z-40 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        {% if current_user.is_authenticated %}
+            <div class="text-center mb-6">
+                <img src="{{ current_user.foto or url_for('static', filename='images/default-avatar.png') }}" alt="Profile" class="w-24 h-24 rounded-full mx-auto border-4 border-yellow-400/60 object-cover">
+                <h4 class="mt-4 text-2xl font-bold text-white">{{ current_user.nama or 'Nama Belum Diisi' }}</h4>
+                
+                {# Refactored user details for clarity and maintainability #}
+                {% set profile_details = [
+                    ('cake', current_user.usia ~ ' tahun' if current_user.usia),
+                    ('users', current_user.jenis_kelamin if current_user.jenis_kelamin),
+                    ('scale', current_user.berat ~ ' kg' if current_user.berat),
+                    ('ruler', current_user.tinggi ~ ' cm' if current_user.tinggi),
+                    ('heart-pulse', 'IMT: ' ~ bmi if bmi),
+                    ('droplet', 'Gol. Darah: ' ~ current_user.gol_darah if current_user.gol_darah)
+                ] %}
+                <div class="mt-3 grid grid-cols-2 gap-x-2 gap-y-2 text-sm text-gray-400">
+                    {% for icon, text in profile_details %}
+                        {% if text %}
+                            <div class="flex items-center justify-center"><i data-lucide="{{ icon }}" class="inline w-4 h-4 mr-1.5 text-yellow-500/80"></i> <span>{{ text }}</span></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('profile') }}" class="mt-4 inline-block bg-yellow-400/20 text-yellow-300 text-xs font-bold py-1.5 px-4 rounded-full hover:bg-yellow-400/30 transition-colors duration-200">
+                    <i data-lucide="edit-3" class="inline w-3 h-3 mr-1.5"></i>Edit Profil
+                </a>
+
+                 <div class="mt-4 text-sm text-gray-400">
+                     {% if current_user.pengalaman %}
+                        <div><i data-lucide="trophy" class="inline w-4 h-4 mr-1"></i> Pengalaman: {{ current_user.pengalaman.split('(')[0] }}</div>
+                    {% else %}
+                        <div><i data-lucide="trophy" class="inline w-4 h-4 mr-1"></i> Pengalaman: <a href="{{ url_for('form_rekomendasi') }}" class="text-yellow-400 hover:underline">Isi Preferensi</a></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Statistik Cepat & Saran -->
+            <div class="mb-8 space-y-4">
+                <h5 class="text-lg font-bold text-yellow-400 mb-3 text-center border-b border-yellow-500/10 pb-2">Aktivitas Cepat</h5>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-gray-800/60 p-3 rounded-lg border border-gray-700 hover:border-yellow-400/40 transition-colors">
+                        <p class="text-3xl font-black text-white">{{ scheduled_programs_list|length }}</p>
+                        <p class="text-xs text-gray-400 font-semibold tracking-wide">TERJADWAL</p>
+                    </div>
+                    <div class="bg-gray-800/60 p-3 rounded-lg border border-gray-700 hover:border-yellow-400/40 transition-colors">
+                        <p class="text-3xl font-black text-white">{{ favorited_programs_list|length }}</p>
+                        <p class="text-xs text-gray-400 font-semibold tracking-wide">FAVORIT</p>
+                    </div>
+                </div>
+
+                {% if favorited_programs_list %}
+                    <div class="mt-4 bg-gradient-to-br from-gray-800 to-gray-900/80 p-4 rounded-xl border border-yellow-400/30 shadow-lg">
+                        <h6 class="font-bold text-yellow-400 text-sm mb-2 flex items-center">
+                            <i data-lucide="sparkles" class="inline w-4 h-4 mr-2 text-yellow-300"></i>
+                            <span>Saran Cepat Untukmu</span>
+                        </h6>
+                        {% set suggested_program = favorited_programs_list[0] %}
+                        <p class="text-white font-semibold text-sm truncate" title="{{ suggested_program['Nama Program Latihan'] }}">{{ suggested_program['Nama Program Latihan'] }}</p>
+                        <p class="text-xs text-gray-400 mt-1">Coba lagi program favoritmu ini!</p>
+                        <a href="{{ url_for('program_detail_route', program_id=suggested_program['ID Program']) }}" class="mt-3 w-full text-center block bg-yellow-500 text-gray-900 text-xs font-bold py-1.5 px-3 rounded-full hover:bg-yellow-400 transition-colors duration-200">
+                            <i data-lucide="play-circle" class="inline w-3.5 h-3.5 mr-1"></i>Mulai Latihan
+                        </a>
+                    </div>
+                {% else %}
+                     <div class="mt-4 text-center text-gray-500 text-sm p-4 bg-gray-800/50 rounded-lg border border-dashed border-gray-700">
+                        <i data-lucide="star" class="w-8 h-8 mx-auto mb-2 text-gray-600"></i>
+                        <p>Favoritkan sebuah program untuk mendapatkan saran cepat di sini.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h5 class="text-lg font-bold text-yellow-400 mb-3">Jadwal Latihan Saya</h5>
+                    <ul class="space-y-3">
+                        {% if scheduled_programs_list and scheduled_programs_list|length > 0 %}
+                            {% for program in scheduled_programs_list %}
+                                <li class="bg-gray-800/70 p-3 rounded-lg border border-yellow-500/20 hover:bg-gray-800 transition-colors">
+                                    <h6 class="font-bold text-white text-sm">{{ program['Nama Program Latihan'] | default('N/A') }}</h6>
+                                    <p class="text-xs text-gray-400 mt-1">{{ program.jadwal_hari }}, {{ program.jadwal_jam }}</p>
+                                    <div class="flex items-center justify-end space-x-2 mt-2">
+                                        <a href="{{ url_for('program_detail_route', program_id=program['ID Program']) }}" class="text-xs text-yellow-400 hover:underline">Detail</a>
+                                        <form action="{{ url_for('delete_scheduled_program') }}" method="POST" class="inline">
+                                            <input type="hidden" name="program_id" value="{{ program['ID Program'] }}">
+                                            <input type="hidden" name="jadwal_hari" value="{{ program.jadwal_hari }}">
+                                            <input type="hidden" name="jadwal_jam" value="{{ program.jadwal_jam }}">
+                                            <button type="submit" title="Hapus Jadwal" class="text-xs text-red-500 hover:text-red-400">
+                                                <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="text-center text-gray-500 text-sm py-4">Belum ada jadwal.</li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-bold text-yellow-400 mb-3">Program Favorit</h5>
+                    <ul class="space-y-3">
+                        {% if favorited_programs_list and favorited_programs_list|length > 0 %}
+                            {% for program in favorited_programs_list %}
+                                <li class="bg-gray-800/70 p-3 rounded-lg border border-yellow-500/20 hover:bg-gray-800 transition-colors">
+                                    <h6 class="font-bold text-white text-sm">{{ program['Nama Program Latihan'] | default('N/A') }}</h6>
+                                    <div class="flex items-center justify-end space-x-2 mt-2">
+                                        <a href="{{ url_for('program_detail_route', program_id=program['ID Program']) }}" class="text-xs text-yellow-400 hover:underline">Detail</a>
+                                        <form action="{{ url_for('toggle_favorite_program') }}" method="POST" class="inline">
+                                            <input type="hidden" name="program_id" value="{{ program['ID Program'] }}">
+                                            <input type="hidden" name="action" value="unfavorite">
+                                            <button type="submit" title="Hapus dari Favorit" class="text-xs text-red-500 hover:text-red-400">
+                                                <i data-lucide="heart-crack" class="w-3 h-3"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="text-center text-gray-500 text-sm py-4">Belum ada favorit.</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        {% else %} 
+            <div class="text-center">
+                <div class="w-24 h-24 rounded-full mx-auto bg-gray-700 flex items-center justify-center border-4 border-gray-600">
+                    <i data-lucide="user" class="w-12 h-12 text-gray-400"></i>
+                </div>
+                <h4 class="mt-4 text-2xl font-bold text-white">Guest</h4>
+                <p class="text-gray-400 mt-4">
+                    <a href="{{ url_for('login') }}" class="text-yellow-400 hover:underline font-semibold">Login</a> atau 
+                    <a href="{{ url_for('register') }}" class="text-yellow-400 hover:underline font-semibold">Register</a> untuk personalisasi.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Mobile Backdrop -->
+<div id="mobile-backdrop" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const profilePanel = document.getElementById('profile-panel');
+    const backdrop = document.getElementById('mobile-backdrop');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const profileToggle = document.getElementById('profile-toggle');
+
+    const closeAllSidebars = () => {
+        sidebar.classList.add('-translate-x-full');
+        profilePanel.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+    };
+
+    if (sidebar && profilePanel && backdrop && sidebarToggle && profileToggle) {
+        sidebarToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
+            closeAllSidebars();
+            if (!isSidebarOpen) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            }
+        });
+
+        profileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isProfileOpen = !profilePanel.classList.contains('translate-x-full');
+            closeAllSidebars();
+            if (!isProfileOpen) {
+                profilePanel.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+            }
+        });
+
+        backdrop.addEventListener('click', closeAllSidebars);
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Hasil Rekomendasi Program Latihan{% endblock %}
+
+{% block content %}
+    <div class="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-8"> {# Removed animate-slide-in from here #}
+        <!-- Epic Header -->
+        <div class="text-center mb-10 md:mb-16">
+            <div class="flex justify-center items-center mb-6">
+                <div class="relative">
+                    <i data-lucide="award" class="w-12 h-12 md:w-16 md:h-16 text-yellow-400 mr-3 md:mr-4 animate-glow"></i>
+                    <div class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-yellow-400 rounded-full animate-ping"></div>
+                </div>
+                <div>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wider drop-shadow-2xl">
+                        <span class="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">REKOMENDASI PROGRAM</span>
+                    </h1>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-400 tracking-widest mt-1 md:mt-2 animate-pulse">
+                        UNTUK ANDA
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Input Summary -->
+        <div class="bg-gray-800/70 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-yellow-400/30 mb-8 md:mb-12 shadow-lg">
+            <h2 class="text-2xl md:text-3xl font-bold text-yellow-400 mb-6 flex items-center">
+                <i data-lucide="user-check" class="w-7 h-7 md:w-8 md:h-8 mr-3"></i>
+                Preferensi Anda
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-300 text-base md:text-lg">
+                <p><strong class="text-yellow-500">Usia:</strong> {{ user_input.usia | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Jenis Kelamin:</strong> {{ user_input.jenis_kelamin | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Tujuan Utama:</strong> {{ user_input.tujuan | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Jenis Latihan:</strong> {{ user_input.jenis_latihan | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Hari Olahraga:</strong> {{ user_input.hari_luang_user | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Waktu Luang:</strong> {{ user_input.waktu_luang | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Tempat Olahraga:</strong> {{ user_input.tempat | default('N/A') }}</p>
+                <p><strong class="text-yellow-500">Pengalaman:</strong> {{ user_input.pengalaman | default('N/A') }}</p>
+            </div>
+        </div>
+
+        <!-- Warm-up & Cool-down Suggestion -->
+        <div class="mb-8 p-6 rounded-lg border-l-4 bg-yellow-500/20 border-yellow-500 text-yellow-200 backdrop-blur-sm shadow-md">
+            <div class="flex items-start mb-4">
+                <i data-lucide="flame" class="w-6 h-6 mr-3 mt-1 text-yellow-400"></i>
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-300 mb-1">Jangan Lupa Pemanasan & Pendinginan!</h3>
+                    <p class="text-gray-200">
+                        Sebelum memulai program latihan apapun, pastikan Anda melakukan pemanasan yang cukup (5-10 menit) untuk mempersiapkan otot dan mengurangi risiko cedera.<br>
+                        Setelah selesai, lakukan juga pendinginan agar tubuh pulih optimal dan mengurangi pegal/nyeri otot.
+                    </p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                <div>
+                    <iframe class="w-full aspect-video rounded-lg shadow-md"
+                        src="https://www.youtube.com/embed/GZGgT0YIAak"
+                        title="Video Pemanasan" frameborder="0" allowfullscreen></iframe>
+                    <p class="text-xs text-yellow-200 mt-2 text-center">Video Pemanasan</p>
+                </div>
+                <div>
+                    <iframe class="w-full aspect-video rounded-lg shadow-md"
+                        src="https://www.youtube.com/embed/bSzaTImBv7U"
+                        title="Video Pendinginan" frameborder="0" allowfullscreen></iframe>
+                    <p class="text-xs text-yellow-200 mt-2 text-center">Video Pendinginan</p>
+                </div>
+            </div>
+        </div>
+
+        {% if activity_schedule_suggestion %}
+        <div class="mb-8 p-6 rounded-lg border-l-4 bg-blue-900/30 border-blue-500 text-blue-200 backdrop-blur-sm shadow-md">
+            <div class="flex items-start">
+                <i data-lucide="calendar-check-2" class="w-6 h-6 mr-3 mt-1 text-blue-400"></i>
+                <div class="text-gray-200">{{ activity_schedule_suggestion|safe }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Recommendations Section -->
+        <div class="bg-gradient-to-br from-gray-900/95 to-black/95 border border-yellow-400/30 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden p-6 md:p-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 flex items-center">
+                <i data-lucide="list-checks" class="w-7 h-7 md:w-8 md:h-8 text-yellow-400 mr-3 animate-pulse"></i>
+                Program yang Direkomendasikan
+            </h2>
+
+        {% if recommendations %}
+            {% set hari_luang_list = user_input['hari_luang_user'].split(' ') if user_input['hari_luang_user'] else ['Senin'] %}
+            {% set waktu_luang = user_input['waktu_luang'] %}
+            {% set jam_mulai = '06:00' %}
+            {% set jam_selesai = '09:00' %}
+            {% if waktu_luang.startswith('Siang') %}
+                {% set jam_mulai = '12:00' %}
+                {% set jam_selesai = '14:00' %}
+            {% elif waktu_luang.startswith('Sore') %}
+                {% set jam_mulai = '16:00' %}
+                {% set jam_selesai = '18:00' %}
+            {% endif %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {% for rec in recommendations %}
+                {% set idx = loop.index0 %}
+                {% set hari = hari_luang_list[idx % hari_luang_list|length] %}
+                {# Bagi slot jam secara merata di range waktu luang #}
+                {% set total_slot = recommendations|length if recommendations|length <= (jam_selesai[:2]|int - jam_mulai[:2]|int + 1) else (jam_selesai[:2]|int - jam_mulai[:2]|int + 1) %}
+                {% set jam_int = (jam_mulai[:2]|int) + (idx % total_slot) %}
+                {% set jam_str = jam_int|string %}
+                {% if jam_str|length == 1 %}
+                    {% set jam_str = '0' ~ jam_str %}
+                {% endif %}
+                {% set jam = jam_str ~ ':00' %}
+                <div class="bg-gray-800/80 rounded-xl border border-gray-700 hover:border-yellow-400/70 transition-all duration-300 shadow-lg hover:shadow-yellow-400/20 transform hover:-translate-y-1 flex flex-col animate-slide-in" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                    <div class="p-5 md:p-6 flex-grow">
+                        {% if rec.yt_id %}
+                          <iframe class="w-full h-48 md:h-56 rounded-lg mb-4 shadow-md"
+                            src="https://www.youtube.com/embed/{{ rec.yt_id }}"
+                            frameborder="0" allowfullscreen>
+                          </iframe>
+                        {% elif rec.gambar %}
+                            <img src="{{ url_for('static', filename=rec.gambar) }}" alt="{{ rec.get('Nama Program Latihan', 'Program Latihan') }}" class="w-full h-48 md:h-56 rounded-lg mb-4 object-cover shadow-md">
+                        {% else %}
+                            <div class="w-full h-48 md:h-56 rounded-lg mb-4 bg-gray-700 flex items-center justify-center text-gray-500 shadow-md">
+                                <i data-lucide="image-off" class="w-16 h-16"></i>
+                            </div>
+                        {% endif %}
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-400 mb-3">{{ rec['Nama Program Latihan'] }}</h3>
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Deskripsi:</strong> {{ rec.get('Deskripsi Program', 'Tidak ada deskripsi.') }}</p> {# Menampilkan Deskripsi Program #}
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Tujuan:</strong> {{ rec.get('Tujuan Latihan', 'Tidak ada tujuan.') }}</p> {# Menampilkan Tujuan Latihan (menggunakan nama kolom yang benar) #}
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Jenis:</strong> {{ rec['Jenis Latihan Program'] }}</p>
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Waktu Ideal:</strong> {{ rec['Waktu Ideal Program'] }}</p>
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Tempat:</strong> {{ rec['Tempat Program'] }}</p>
+                        <p class="text-gray-300 mb-1 text-sm md:text-base"><strong class="text-gray-400">Durasi:</strong> {{ rec['Durasi Program (menit)'] }} menit</p>
+                        <p class="text-gray-300 mb-3 text-sm md:text-base"><strong class="text-gray-400">Level:</strong> {{ rec['Tingkat Kebugaran Program'] | default('N/A') }}</p>
+                        
+                        <span class="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full">
+                                Skor Kecocokan: {{ "%.2f"|format(rec.adjusted_similarity|float) }}
+                        </span>
+                    </div>
+                    <div class="p-5 md:p-6 border-t border-gray-700 space-y-3">
+                        <form action="{{ url_for('simpan_program') }}" method="post" class="space-y-2">
+                            <input type="hidden" name="program_id" value="{{ rec['ID Program'] }}">
+                            <label for="jadwal_hari_{{ rec['ID Program'] }}" class="block text-sm font-medium text-gray-400">Jadwalkan Hari:</label>
+                            <select name="jadwal_hari" id="jadwal_hari_{{ rec['ID Program'] }}" class="w-full p-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 text-sm">
+                                {% for h in ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"] %}
+                                    <option value="{{ h }}" {% if h == hari %}selected{% endif %}>{{ h }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="jadwal_jam_{{ rec['ID Program'] }}" class="block text-sm font-medium text-gray-400">Jam:</label>
+                            <input type="time" name="jadwal_jam" id="jadwal_jam_{{ rec['ID Program'] }}" value="{{ jam }}" class="w-full p-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 text-sm">
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 text-sm flex items-center justify-center">
+                                <i data-lucide="calendar-plus" class="w-4 h-4 mr-2"></i>Simpan ke Jadwal
+                            </button>
+                        </form>
+                        {% if current_user.is_authenticated %}
+                        <form action="{{ url_for('toggle_favorite_program') }}" method="POST" class="mt-2">
+                            <input type="hidden" name="program_id" value="{{ rec['ID Program'] }}">
+                            {% if rec.is_favorited %}
+                                <input type="hidden" name="action" value="unfavorite">
+                                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 text-sm flex items-center justify-center">
+                                    <i data-lucide="heart-crack" class="w-4 h-4 mr-2"></i>Hapus Favorit
+                                </button>
+                            {% else %}
+                                <input type="hidden" name="action" value="favorite">
+                                <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 rounded-md transition-colors duration-200 text-sm flex items-center justify-center">
+                                    <i data-lucide="heart" class="w-4 h-4 mr-2"></i>Simpan Favorit
+                                </button>
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                        <a href="{{ url_for('program_detail_route', program_id=rec['ID Program']) }}" class="block w-full mt-2 text-center bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 text-sm">
+                            <i data-lucide="eye" class="w-4 h-4 inline-block mr-1"></i> Lihat Detail
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-10 px-6 bg-gray-800/50 rounded-lg border border-gray-700">
+                <i data-lucide="search-x" class="w-16 h-16 text-yellow-500 mx-auto mb-4"></i>
+                <p class="text-xl text-gray-300 mb-2">Maaf, belum ada program yang cocok.</p>
+                Maaf, untuk saat ini belum ada program latihan yang sesuai dengan preferensi Anda.<br>
+                Silakan coba sesuaikan kembali pilihan Anda pada formulir.
+            </div>
+        {% endif %}
+        </div>
+
+        {% if recommendations and show_more_button_flag %}
+        <div class="text-center mt-8">
+            <form action="{{ url_for('recommend_route') }}" method="post">
+                {# Hidden fields untuk mengirim kembali input pengguna awal #}
+                <input type="hidden" name="usia" value="{{ user_input.usia }}">
+                <input type="hidden" name="jenis_kelamin" value="{{ user_input.jenis_kelamin }}">
+                
+                {# Untuk field yang bisa multiple (disimpan sebagai string dipisah koma di user_input) #}
+                <input type="hidden" name="tujuan" value="{{ user_input.tujuan }}">
+                <input type="hidden" name="jenis_latihan" value="{{ user_input.jenis_latihan }}">
+                <input type="hidden" name="hari_sibuk" value="{{ user_input.hari_sibuk }}">
+
+                <input type="hidden" name="waktu_luang" value="{{ user_input.waktu_luang }}">
+                <input type="hidden" name="tempat" value="{{ user_input.tempat }}">
+                <input type="hidden" name="pengalaman" value="{{ user_input.pengalaman }}">
+                
+                <input type="hidden" name="num_to_show_next" value="{{ next_num_to_show_for_button }}">
+                
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center mx-auto animate-subtle-pulse">
+                    <i data-lucide="plus-circle" class="w-5 h-5 mr-2"></i>Tampilkan Lebih Banyak Rekomendasi
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+            <a href="{{ url_for('form_rekomendasi') }}"
+               class="inline-flex items-center justify-center bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-8 text-lg rounded-xl transition-all duration-300 hover:scale-105 group transform hover:-translate-y-1 w-full sm:w-auto">
+                <i data-lucide="edit" class="w-5 h-5 mr-2 group-hover:rotate-[-12deg] transition-transform"></i>
+                Ubah Preferensi
+            </a>
+            <a href="{{ url_for('dashboard') }}"
+               class="inline-flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-black py-3 px-8 text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-400/30 group transform hover:-translate-y-1 w-full sm:w-auto">
+                <i data-lucide="arrow-left-circle" class="w-6 h-6 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Kembali ke Dashboard
+            </a>
+        </div>
+
+        <!-- Epic Footer -->
+        <div class="text-center mt-12 md:mt-16 p-6 md:p-8 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl backdrop-blur-sm border border-yellow-400/20">
+            <div class="flex justify-center items-center mb-3 md:mb-4">
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mr-2"></i>
+                <p class="text-gray-300 text-base md:text-lg font-semibold">© {{ current_year }} Batman Training Program</p>
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 ml-2"></i>
+            </div>
+            <p class="text-yellow-400 font-bold text-lg md:text-xl tracking-wider">
+                "FORGE YOUR STRENGTH" 🦇
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

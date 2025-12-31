@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Riwayat Latihan{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-4xl space-y-8">
+        <div class="bg-gray-900/70 border border-yellow-400/30 rounded-xl p-8 backdrop-blur-sm shadow-lg">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-extrabold text-yellow-400">
+                    <i data-lucide="history" class="inline-block w-8 h-8 mr-3 align-middle"></i>
+                    Riwayat Latihan
+                </h2>
+                <a href="{{ url_for('dashboard') }}" class="text-sm text-yellow-400 hover:underline">
+                    &larr; Kembali ke Dashboard
+                </a>
+            </div>
+
+            {% if history and history|length > 0 %}
+            <div class="overflow-x-auto rounded-lg border border-gray-700">
+                <table class="min-w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-800/50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-yellow-400 uppercase tracking-wider">Tanggal</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-yellow-400 uppercase tracking-wider">Program Latihan</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-yellow-400 uppercase tracking-wider">Durasi</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-yellow-400 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gray-900/50 divide-y divide-gray-800">
+                        {% for item in history %}
+                        <tr class="hover:bg-gray-800/60 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ item.date }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{{ item.program }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ item.duration }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-500/20 text-green-300">
+                                    {{ item.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-12 border-2 border-dashed border-gray-700 rounded-lg">
+                <i data-lucide="folder-search" class="w-16 h-16 mx-auto text-gray-500"></i>
+                <h3 class="mt-4 text-xl font-semibold text-white">Riwayat Latihan Kosong</h3>
+                <p class="mt-2 text-sm text-gray-400">Anda belum menyelesaikan program latihan apapun.</p>
+                <a href="{{ url_for('exercise') }}" class="mt-6 inline-flex items-center justify-center py-2 px-5 rounded-lg transition duration-300 bg-yellow-400 text-black font-bold hover:bg-yellow-500">
+                    Mulai Latihan Sekarang
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

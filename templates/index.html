@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}Form Preferensi Latihan{% endblock %}
+
+{% block head_extra %}
+    {# Blok ini sengaja dikosongkan karena semua konfigurasi tema dan animasi telah dipusatkan di base.html #}
+{% endblock %}
+
+{% block content %}
+    <div class="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-8 animate-slide-in">
+        <!-- Epic Header -->
+        <div class="text-center mb-10 md:mb-16">
+            <div class="flex justify-center items-center mb-6">
+                <div class="relative">
+                    <i data-lucide="shield" class="w-12 h-12 md:w-16 md:h-16 text-yellow-400 mr-3 md:mr-4 animate-glow"></i>
+                    <div class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-yellow-400 rounded-full animate-ping"></div>
+                </div>
+                <div>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-wider drop-shadow-2xl">
+                        <span class="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">BATMAN</span>
+                    </h1>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-400 tracking-widest mt-1 md:mt-2 animate-pulse">
+                        TRAINING PROGRAM
+                    </h2>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-3 md:mb-4">
+                </p>
+                <p class="text-gray-400 text-base md:text-lg">
+                    Program latihan personal yang dirancang untuk membentuk tubuh dan mental seperti Batman.
+                    Bersiaplah untuk transformasi yang akan mengubah hidup Anda!
+                </p>
+            </div>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6 space-y-3">
+                  {% for category, message in messages %}
+                    <div class="p-4 rounded-lg border-l-4 backdrop-blur-sm animate-slide-in
+                                {% if category == 'error' %}bg-red-900/80 border-red-500 text-red-200{% endif %}
+                                {% if category == 'success' %}bg-green-900/80 border-green-500 text-green-200{% endif %}
+                                {% if category == 'info' %}bg-blue-900/80 border-blue-500 text-blue-200{% endif %}
+                                {% if category == 'warning' %}bg-yellow-700/80 border-yellow-400 text-yellow-100{% endif %}"
+                         role="alert">
+                      <div class="flex items-center">
+                            {% if category == 'error' %}<i data-lucide="alert-triangle" class="w-5 h-5 mr-2"></i>
+                            {% elif category == 'success' %}<i data-lucide="check-circle" class="w-5 h-5 mr-2"></i>
+                            {% elif category == 'info' %}<i data-lucide="info" class="w-5 h-5 mr-2"></i>
+                            {% elif category == 'warning' %}<i data-lucide="alert-octagon" class="w-5 h-5 mr-2"></i>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Main Form -->
+        <div class="bg-gradient-to-br from-gray-900/95 to-black/95 border border-yellow-400/30 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 border-b border-yellow-400/30 p-6 md:p-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
+                            <i data-lucide="target" class="w-7 h-7 md:w-8 md:h-8 text-yellow-400 mr-3 animate-pulse"></i>
+                            Program Latihan Personal
+                        </h2>
+                        <p class="text-gray-300 mt-2 text-base md:text-lg">
+                            {{ salam_pembuka | default('Silakan isi preferensi Anda untuk mendapatkan rekomendasi program latihan yang sempurna.') }}
+                        </p>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-yellow-400/20 rounded-full flex items-center justify-center animate-spin-slow">
+                            <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10 text-yellow-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 md:p-10 lg:p-12">
+                <form method="POST" action="{{ url_for('recommend_route') }}" class="space-y-8 md:space-y-10">
+                    
+                    <!-- Usia -->
+                    <div class="space-y-3 group">
+                        <label for="usia" class="text-lg md:text-xl font-bold text-white flex items-center group-hover:text-yellow-400 transition-colors">
+                            <i data-lucide="clock" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.usia | default('1. Usia Anda (18-35 tahun):') }}
+                        </label>
+                        <input type="number" id="usia" name="usia" min="18" max="35" placeholder="Contoh: 25"
+                               value="{{ user_data.usia if user_data and user_data.usia is not none else '' }}" required
+                               class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white placeholder-gray-400 rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                    </div>
+
+                    <!-- Jenis Kelamin -->
+                    <div class="space-y-3 group">
+                        <label for="jenis_kelamin" class="text-lg md:text-xl font-bold text-white flex items-center group-hover:text-yellow-400 transition-colors">
+                             <i data-lucide="users" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.jenis_kelamin | default('2. Jenis Kelamin Anda:') }}
+                        </label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled {% if not user_data or not user_data.jenis_kelamin %}selected{% endif %}>-- Pilih Jenis Kelamin --</option>
+                            {% for option in options.jenis_kelamin | default(['Pria', 'Wanita']) %}
+                            <option value="{{ option }}" {% if user_data and user_data.jenis_kelamin == option %}selected{% endif %}>
+                                {% if option == 'Pria' %}🚹 {% elif option == 'Wanita' %}🚺 {% endif %}{{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Tujuan -->
+                    <div class="space-y-4 group">
+                        <label for="tujuan" class="text-lg md:text-xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center">
+                            <i data-lucide="award" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.tujuan | default('3. Apa tujuan utama Anda berolahraga?') }}
+                        </label>
+                        <select id="tujuan" name="tujuan" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled {% if not user_data or not user_data.tujuan %}selected{% endif %}>-- Pilih Tujuan --</option>
+                            {% for item in options.tujuan %}
+                            <option value="{{ item }}" {% if user_data and user_data.tujuan == item %}selected{% endif %}>{{ item }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Jenis Latihan -->
+                    <div class="space-y-4 group">
+                        <label for="jenis_latihan" class="text-lg md:text-xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center">
+                            <i data-lucide="activity" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.jenis_latihan | default('4. Jenis latihan apa yang paling Anda sukai?') }}
+                        </label>
+                        <select id="jenis_latihan" name="jenis_latihan" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled {% if not user_data or not user_data.jenis_latihan %}selected{% endif %}>-- Pilih Jenis Latihan --</option>
+                            {% for jenis in options.jenis_latihan %}
+                            <option value="{{ jenis }}" {% if user_data and user_data.jenis_latihan == jenis %}selected{% endif %}>{{ jenis }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Hari Sibuk -->
+                    <div class="space-y-4 group">
+                        <label class="text-lg md:text-xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center">
+                            <i data-lucide="calendar-days" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.hari_sibuk | default('5. Hari apa saja Anda biasanya sibuk? (Pilih satu atau lebih):') }}
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+                            {% for hari in options.hari_sibuk | default(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu']) %}
+                                <label for="hari_sibuk_{{ loop.index }}" class="flex items-center space-x-2 p-2.5 md:p-3 bg-gray-800/60 rounded-lg border-2 border-gray-700 hover:border-yellow-400 hover:bg-gray-800/80 transition-all duration-300 cursor-pointer group/item">
+                                    <input type="checkbox" id="hari_sibuk_{{ loop.index }}" name="hari_sibuk" value="{{ hari }}"
+                                           {% if user_data and user_data.hari_sibuk %}
+                                               {% if hari in user_data.hari_sibuk %}checked{% endif %}
+                                           {% elif request.form.hari_sibuk and hari in request.form.getlist('hari_sibuk') %}checked{% endif %}
+                                           class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-400 focus:ring-2">
+                                     <span class="text-white cursor-pointer text-sm md:text-base group-hover/item:text-yellow-400 transition-colors">📅 {{ hari }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Waktu Luang -->
+                    <div class="space-y-3 group">
+                        <label for="waktu_luang" class="text-lg md:text-xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center">
+                            <i data-lucide="alarm-clock" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.waktu_luang | default('6. Pada jam berapa Anda biasanya punya waktu luang untuk olahraga? (06:00 - 18:00):') }}
+                        </label>
+                        <select id="waktu_luang" name="waktu_luang" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled selected>⏰ Pilih Waktu Luang</option>
+                            {% for waktu in options.waktu_luang | default(['Pagi (06:00-09:00)', 'Siang (12:00-14:00)', 'Sore (16:00-18:00)']) %}
+                            <option value="{{ waktu }}" {% if user_data and user_data.waktu_luang == waktu %}selected{% elif request.form.waktu_luang == waktu %}selected{% endif %}>
+                                {% if 'Pagi' in waktu %}🌅
+                                {% elif 'Siang' in waktu %}☀️
+                                {% elif 'Sore' in waktu %}🌆
+                                {% endif %}
+                                {{ waktu }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Tempat -->
+                    <div class="space-y-3 group">
+                        <label for="tempat" class="text-lg md:text-xl font-bold text-white flex items-center group-hover:text-yellow-400 transition-colors">
+                            <i data-lucide="map-pin" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.tempat | default('8. Di mana Anda biasanya berolahraga?') }}
+                        </label>
+                        <select id="tempat" name="tempat" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled selected>📍 Pilih Lokasi Olahraga</option>
+                            {% for lokasi in options.tempat | default(['Rumah', 'Gym/Fitness Center', 'Outdoor (Taman, Lapangan)',]) %}
+                            <option value="{{ lokasi }}" {% if user_data and user_data.tempat == lokasi %}selected{% elif request.form.tempat == lokasi %}selected{% endif %}>
+                                {% if lokasi == 'Rumah' %}🏠
+                                {% elif 'Gym' in lokasi %}🏋️
+                                {% elif 'Outdoor' in lokasi %}🌳
+                                {% endif %}
+                                {{ lokasi }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Pengalaman -->
+                    <div class="space-y-3 group">
+                        <label for="pengalaman" class="text-lg md:text-xl font-bold text-white flex items-center group-hover:text-yellow-400 transition-colors">
+                            <i data-lucide="trophy" class="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mr-2 md:mr-3"></i>
+                            {{ fields.pengalaman | default('9. Bagaimana tingkat pengalaman Anda dalam berolahraga?') }}
+                        </label>
+                        <select id="pengalaman" name="pengalaman" required class="w-full p-3 md:p-4 bg-gray-800/80 border-2 border-gray-600 text-white rounded-xl focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 focus:outline-none transition-all duration-300 text-base md:text-lg hover:border-yellow-400/50">
+                            <option value="" disabled {% if not user_data or not user_data.pengalaman %}selected{% endif %}>🎯 Pilih Tingkat Pengalaman</option> {# Keep this as is for initial selection #}
+                            {% for exp in options.pengalaman | default(['Pemula (Baru memulai atau jarang)', 'Menengah (Cukup rutin, paham dasar)', 'Mahir (Sangat rutin, teknik bagus)']) %}
+                            <option value="{{ exp }}" {% if user_data and user_data.pengalaman == exp %}selected{% endif %}>
+                                {% if 'Pemula' in exp %}🌱
+                                {% elif 'Menengah' in exp %}⚡
+                                {% elif 'Mahir' in exp %}🏆
+                                {% endif %}
+                                {{ exp }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-6 pt-8 md:pt-12">
+                        <button type="submit"
+                                class="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-black py-4 md:py-5 px-6 md:px-8 text-lg md:text-xl rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-400/50 flex items-center justify-center group transform hover:-translate-y-1">
+                            <i data-lucide="zap" class="w-6 h-6 md:w-7 md:h-7 mr-2 md:mr-3 group-hover:animate-bounce"></i>
+                            <span class="tracking-wide">DAPATKAN REKOMENDASI</span>
+                            <i data-lucide="arrow-right" class="w-6 h-6 md:w-7 md:h-7 ml-2 md:ml-3 group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform"></i>
+                        </button>
+                        
+                        <a href="{{ url_for('dashboard') }}"
+                           class="flex-1 border-2 border-gray-600 text-white hover:bg-gray-800 hover:border-yellow-400 py-4 md:py-5 px-6 md:px-8 text-lg md:text-xl rounded-xl transition-all duration-300 flex items-center justify-center group hover:scale-105 transform hover:-translate-y-1">
+                            <i data-lucide="arrow-left" class="w-6 h-6 md:w-7 md:h-7 mr-2 md:mr-3 group-hover:-translate-x-1 md:group-hover:-translate-x-2 transition-transform"></i>
+                            <span class="tracking-wide">KEMBALI KE DASHBOARD</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Epic Footer -->
+        <div class="text-center mt-12 md:mt-16 p-6 md:p-8 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl backdrop-blur-sm border border-yellow-400/20">
+            <div class="flex justify-center items-center mb-3 md:mb-4">
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mr-2"></i>
+                <p class="text-gray-300 text-base md:text-lg font-semibold">© {{ current_year }} Batman Training Program</p>
+                <i data-lucide="shield" class="w-6 h-6 md:w-8 md:h-8 text-yellow-400 ml-2"></i>
+            </div>
+            <p class="text-yellow-400 font-bold text-lg md:text-xl tracking-wider">
+                "DESIGNED FOR ERI WAYNE" 🦇
+            </p>
+        </div>
+    </div>
+
+    <script>        
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const inputsAndSelects = form.querySelectorAll('input, select');
+            
+            inputsAndSelects.forEach(el => {
+                el.addEventListener('focus', function() {
+                    // this.parentElement.classList.add('animate-pulse'); // Bisa terlalu berlebihan
+                    this.style.transform = 'scale(1.01)';
+                });
+                
+                el.addEventListener('blur', function() {
+                    // this.parentElement.classList.remove('animate-pulse');
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const parentLabel = this.closest('label');
+                    if (this.checked) {
+                        parentLabel.style.transform = 'scale(1.03)';
+                        parentLabel.classList.add('border-yellow-500', 'bg-gray-700/80');
+                        setTimeout(() => {
+                           parentLabel.style.transform = 'scale(1)';
+                        }, 200);
+                    } else {
+                        parentLabel.classList.remove('border-yellow-500', 'bg-gray-700/80');
+                    }
+                });
+                 // Initial check state styling
+                const parentLabel = checkbox.closest('label');
+                if (checkbox.checked) {
+                    parentLabel.classList.add('border-yellow-500', 'bg-gray-700/80');
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                const originalText = submitBtn.querySelector('span').textContent;
+                submitBtn.querySelector('span').textContent = 'MEMPROSES...';
+                const zapIcon = submitBtn.querySelector('i[data-lucide="zap"]');
+                if(zapIcon) zapIcon.remove();
+                
+                const loaderIcon = document.createElement('i');
+                loaderIcon.setAttribute('data-lucide', 'loader-2');
+                loaderIcon.classList.add('w-6', 'h-6', 'md:w-7', 'md:h-7', 'mr-2', 'md:mr-3', 'animate-spin');
+                submitBtn.prepend(loaderIcon);
+                lucide.createIcons({
+                    nodes: [loaderIcon]
+                });
+                
+                // submitBtn.disabled = true; // Biarkan form submit, jangan disable tombol sepenuhnya
+            });
+
+            // --- AUTO SELECT JENIS LATIHAN BERDASARKAN TUJUAN ---
+            const tujuanSelect = document.getElementById('tujuan');
+            const jenisLatihanSelect = document.getElementById('jenis_latihan');
+
+            function autoSelectJenisLatihan() {
+                const tujuan = tujuanSelect.value;
+                if (tujuan === 'Menurunkan berat badan') {
+                    // Pilih 'Kardio' atau 'HIIT'. Kita pilih Kardio sebagai default.
+                    jenisLatihanSelect.value = 'Kardio (Lari, Sepeda, Renang)';
+                } else if (tujuan === 'Meningkatkan massa otot') {
+                    jenisLatihanSelect.value = 'Latihan Fisik (Angkat Beban, Push up, Squat)';
+                } else if (tujuan === 'Menjaga kesehatan') {
+                    // Untuk menjaga kesehatan, HIIT adalah pilihan yang baik dan efisien.
+                    jenisLatihanSelect.value = 'HIIT';
+                }
+            }
+
+            // Tambahkan event listener ke dropdown tujuan
+            tujuanSelect.addEventListener('change', autoSelectJenisLatihan);
+
+            // --- AUTO SELECT JENIS LATIHAN SELECT BERDASARKAN TUJUAN ---
+            // This part of the auto-select logic is for single-select dropdowns, which are no longer used for Jenis Latihan.
+            // Keeping it commented out or removing it is appropriate.
+            /*
+            const tujuanSelect = document.getElementById('tujuan');
+            const jenisLatihanSelect = document.getElementById('jenis_latihan');
+
+            function autoSelectJenisLatihanSelect() {
+                const tujuan = tujuanSelect.value;
+                if (tujuan === 'Menurunkan berat badan') {
+                    jenisLatihanSelect.value = 'Kardio (Lari, Sepeda, Renang)';
+                }
+                if (tujuan === 'Meningkatkan massa otot') {
+                    jenisLatihanSelect.value = 'Latihan Fisik (Angkat Beban, Push up, Squat)';
+                }
+                if (tujuan === 'Menjaga kesehatan') {
+                    jenisLatihanSelect.selectedIndex = 0; // Pilih default (atau bisa pilih salah satu)
+                }
+            }
+            tujuanSelect.addEventListener('change', autoSelectJenisLatihanSelect);
+            */
+        });
+    </script>
+{% endblock %}

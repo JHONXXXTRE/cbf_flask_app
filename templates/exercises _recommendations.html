@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Recommendations - Batman Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        /* Custom scrollbar (opsional, untuk konsistensi tema gelap) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a202c; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FBC02D; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700;
+        }
+
+        /* Gaya CSS Asli Anda untuk konten akan dipertahankan */
+        body {
+            /* font-family dari Tailwind ('font-sans') kemungkinan akan lebih dominan 
+               karena diterapkan langsung pada tag body dengan kelas. 
+               Jika 'PrimaryMuscleFont' sangat penting untuk konten spesifik, 
+               terapkan pada elemen di dalam .container atau .header.
+            */
+            font-family: 'PrimaryMuscleFont', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            /* Memberi background gelap semi-transparan dan efek blur agar header tetap terlihat jelas saat scroll */
+            background-color: rgba(17, 24, 39, 0.8); /* bg-gray-900 with 80% opacity */
+            -webkit-backdrop-filter: blur(10px); /* Safari */
+            backdrop-filter: blur(10px);
+            z-index: 50; /* Memastikan header di atas semua konten */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 88px;
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color:  #007BFF;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: rgb(61, 229, 83);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #176b24;
+            margin-top: 120px;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 36px;
+            color:  #007BFF;
+            margin-top: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        /* Exercise frame */
+        .exercise-frame {
+            border: 2px solid #333;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        /* Exercise name style */
+        .exercise-name {
+            font-size: 24px;
+        }
+
+        /* Images section */
+        .images-section {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Image style */
+        .exercise-image {
+            max-width: 48%;
+            border: 1px solid #333;
+        }
+
+        /* Instructions section */
+        .instructions-section {
+            padding: 10px 0;
+        }
+
+        /* Instruction style with numbered steps */
+        .instruction {
+            counter-increment: step;
+            margin-bottom: 10px;
+        }
+
+        .instruction::before {
+            content: counter(step);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* User input section */
+        .user-input {
+            margin-top: 20px;
+        }
+
+        /* User input label style */
+        .user-input label {
+            font-weight: bold;
+        }
+
+        /* Additional styles for buttons */
+        .btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: .375rem;
+            margin-left: 40px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bat-signal': 'batSignal 3s ease-in-out infinite',
+                        // 'slide-in': 'slideInFromDark 0.8s ease-out', // Tidak digunakan untuk seluruh halaman di sini
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'subtle-pulse': 'subtlePulse 2s infinite ease-in-out'
+                    },
+                    keyframes: {
+                        batSignal: {
+                            '0%, 100%': { opacity: '0.7', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.1)' },
+                        },
+                        // slideInFromDark: { // Tidak digunakan untuk seluruh halaman di sini
+                        //     '0%': { opacity: '0', transform: 'translateY(20px)' },
+                        //     '100%': { opacity: '1', transform: 'translateY(0)' },
+                        // },
+                        glow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 5px #FBC02D)' },
+                            '50%': { filter: 'drop-shadow(0 0 15px #FBC02D)' },
+                        },
+                        subtlePulse: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.03)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-gray-200 font-sans overflow-x-hidden">
+    <!-- Animated Batman Background -->
+    <div class="fixed inset-0 opacity-10 pointer-events-none z-0"> 
+        <div class="absolute top-10 right-10 w-40 h-40 bg-yellow-400 rounded-full animate-bat-signal"></div>
+        <div class="absolute top-20 left-20 w-32 h-32 opacity-50 text-yellow-600 transform rotate-45 animate-subtle-pulse"><i data-lucide="shield" class="w-full h-full"></i></div>
+        <div class="absolute bottom-40 right-32 w-24 h-24 opacity-50 text-yellow-600 transform rotate-12 animate-bounce"><i data-lucide="bat" class="w-full h-full"></i></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 opacity-50 text-yellow-600 transform -rotate-45 animate-spin"><i data-lucide="aperture" class="w-full h-full"></i></div>
+        <div class="absolute bottom-20 left-1/3 w-20 h-20 opacity-50 text-yellow-600 transform rotate-90 animate-subtle-pulse"><i data-lucide="shield-alert" class="w-full h-full"></i></div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-800 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10"> 
+    <header>
+        <div class="logo">
+            <a href="{{ url_for('dashboard') }}" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 animate-glow" title="Dashboard">
+                <i data-lucide="shield" class="w-12 h-12 md:w-16 md:h-16"></i> 
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Home</a></li>
+                <li><a href="{{ url_for('form_rekomendasi') }}">Isi Preferensi Pengguna</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Exercises tailored to your preference details</h1>
+        <p>Jumlah hasil: {{ recommendations|length }}</p>
+        <ul>
+            {% for exercise in recommendations %}
+            <h3 class="exercise-name">{{ exercise.name }}</h3>
+            <!-- Display Images -->
+            <div class="images-section">
+                {% for image in exercise.images %}
+                <img class="exercise-image"
+                    src="{{ url_for('static', filename='/exercises/' ~ exercise.id ~ '/images/' ~ image) }}"
+                    alt="Exercise Image">
+                {% endfor %}
+            </div>
+            <div class="exercise-frame">
+                <!-- Display Instructions -->
+                <div class="instructions-section">
+                    {% for instruction in exercise.instructions.split('<br>') %}
+                    <p class="instruction">{{ instruction | safe }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('exercises_recommendations') }}" method="POST">
+            <input type="hidden" name="user_input" value='{{ user_input | tojson | replace("'", '"') }}'>
+            <button class="btn" type="submit">More Recommend Exercise</button>
+        </form>
+        <br><br>
+    </div>
+    </div> {/* Penutup div wrapper z-10 */}
+
+    <script>
+        lucide.createIcons(); // Inisialisasi ikon Lucide
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!-- filepath: c:\laragon\www\cbf_flask_app\templates\base.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Program latihan personal yang dirancang untuk membentuk tubuh dan mental seperti Batman.">
+    <title>{% block title %}BRUCE WAYNE{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='bat.jpg') }}" type="image/jpeg">
+    {# Tailwind CSS for the Batman theme #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    {# Google Fonts: Poppins for a modern, clean look #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    {# Font Awesome for icons #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {# Lucide Icons for consistency with the form #}
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        // Centralized Tailwind configuration for a consistent and stunning theme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // Set Poppins as the default sans-serif font for the entire application
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'gradient': 'gradient 15s ease infinite',
+                        'bat-signal': 'batSignal 3s ease-in-out infinite',
+                        'slide-in': 'slideInFromDark 0.8s ease-out forwards',
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'subtle-pulse': 'subtlePulse 2s infinite ease-in-out',
+                        'bat-bounce': 'batBounce 2s infinite ease-in-out',
+                        'spin-slow': 'spin 10s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        batSignal: { '0%, 100%': { opacity: '0.7', transform: 'scale(1)' }, '50%': { opacity: '1', transform: 'scale(1.1)' } },
+                        slideInFromDark: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        glow: { '0%, 100%': { filter: 'drop-shadow(0 0 5px #22d3ee)' }, '50%': { filter: 'drop-shadow(0 0 15px #22d3ee)' } },
+                        subtlePulse: { '0%, 100%': { transform: 'scale(1)', opacity: '0.8' }, '50%': { transform: 'scale(1.03)', opacity: '1' } },
+                        batBounce: { '0%, 100%': { transform: 'translateY(0) rotate(12deg)' }, '50%': { transform: 'translateY(-10px) rotate(12deg)' } },
+                        spin: { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for the new futuristic blue/cyan theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; /* slate-800 */ }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; /* slate-600 */ }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; /* cyan-500 */ }
+    </style>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-gray-200 font-sans overflow-x-hidden animate-gradient"
+      style="background-size: 200% 200%;">
+
+    <!-- Animated background elements (shields, bats, etc.) - now global via base.html -->
+    <div class="fixed inset-0 opacity-80 pointer-events-none z-[-1]">
+        <div class="absolute top-10 right-10 w-44 h-44 bg-yellow-400 rounded-full blur-2xl animate-bat-signal"></div>
+        <div class="absolute top-20 left-20 w-36 h-36 opacity-100 text-yellow-400 drop-shadow-[0_0_80px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-40 right-32 w-28 h-28 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform animate-bat-bounce">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/2 left-1/4 w-20 h-20 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-spin-slow">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-20 left-1/3 w-24 h-24 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,0.9)] transform rotate-90 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <!-- Tambahan animasi ramai -->
+        <div class="absolute top-1/4 left-1/2 w-28 h-28 opacity-100 text-yellow-300 drop-shadow-[0_0_60px_rgba(253,224,71,0.95)] transform -rotate-12 animate-bat-bounce">
+            <i data-lucide="shield" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-10 left-10 w-20 h-20 opacity-100 text-yellow-400 drop-shadow-[0_0_40px_rgba(253,224,71,1)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/3 right-1/4 w-32 h-32 opacity-100 text-yellow-400 drop-shadow-[0_0_60px_rgba(253,224,71,1)] transform rotate-45 animate-subtle-pulse">
+            <i data-lucide="shield-alert" class="w-full h-full"></i>
+        </div>
+        <div class="absolute bottom-1/4 right-1/2 w-24 h-24 opacity-100 text-yellow-200 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)] transform -rotate-45 animate-bat-bounce">
+            <i data-lucide="aperture" class="w-full h-full"></i>
+        </div>
+        <div class="absolute top-1/6 left-1/6 w-16 h-16 opacity-100 text-yellow-300 drop-shadow-[0_0_30px_rgba(253,224,71,0.9)] transform rotate-12 animate-spin-slow">
+            <i data-lucide="zap" class="w-full h-full"></i>
+        </div>
+        <!-- Gradient bawah -->
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-yellow-200 to-transparent"></div>
+    </div>
+
+    {% block content %}{% endblock %}
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
